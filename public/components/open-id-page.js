@@ -9,9 +9,14 @@ class OpenIDPage extends React.Component {
 
   constructor() {
     super();
+    this.setConfigurationModalVisibility = this.setConfigurationModalVisibility.bind(this);
+    this.setStep = this.setStep.bind(this);
+    this.skipTutorial = this.skipTutorial.bind(this);
+
     this.state = {
       currentStep: 1,
-      configurationModalOpen: false
+      configurationModalOpen: false,
+      tutorialSkiped: false
     };
   }
 
@@ -21,6 +26,13 @@ class OpenIDPage extends React.Component {
 
   setStep(step) {
     this.setState({ currentStep: step });
+  }
+
+  skipTutorial() {
+    this.setState({
+      currentStep: 4,
+      tutorialSkiped: true
+    });
   }
 
   render() {
@@ -80,12 +92,14 @@ class OpenIDPage extends React.Component {
                 Configuration
               </button>
             </div>
-            <div className="playground-content">
+            <div
+              className={`playground-content ${this.state.tutorialSkiped ? 'skip-tutorial' : ''}`}
+            >
               { this.state.currentStep >= 1 ?
                 <StepOne
                   openModal={ () => { this.setConfigurationModalVisibility(true); } }
                   nextStep={ () => { this.setStep(2); } }
-                  skipTutorial={ () => { this.setStep(4); }}
+                  skipTutorial={this.skipTutorial}
                   isActive={ this.state.currentStep === 1 }
                 />
                 : null
