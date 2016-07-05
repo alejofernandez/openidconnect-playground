@@ -22,6 +22,8 @@ class OpenIDPage extends React.Component {
 
   setConfigurationModalVisibility(v) {
     this.setState({ configurationModalOpen: v });
+    // Add class to prevent page from scrolling when modal is opened
+    document.body.classList.toggle('overflow-hidden', v);
   }
 
   setStep(step) {
