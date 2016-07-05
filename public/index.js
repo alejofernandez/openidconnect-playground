@@ -60,7 +60,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(174);
+	__webpack_require__(180);
 
 	_reactDom2.default.render(_react2.default.createElement(_openIdPage2.default, null), document.getElementById('content'));
 
@@ -20652,7 +20652,9 @@
 
 	    _this.start = _this.start.bind(_this);
 	    _this.state = {
-	      stepState: 'initial'
+	      codeBoxTitle: 'Request',
+	      showSpinner: false,
+	      responseCode: ''
 	    };
 	    return _this;
 	  }
@@ -20662,10 +20664,14 @@
 	    value: function start() {
 	      var _this2 = this;
 
-	      this.setState({ stepState: 'wait' });
+	      this.setState({ showSpinner: true });
 
 	      setTimeout(function () {
-	        _this2.setState({ stepState: 'response' });
+	        _this2.setState({
+	          codeBoxTitle: 'Request / Response',
+	          showSpinner: false,
+	          responseCode: 'https://openidconnect.net/callback?code=#4/SXjuF3gzD04Oouq'
+	        });
 	        _this2.props.nextStep();
 	      }, 500);
 	    }
@@ -20694,8 +20700,7 @@
 	            _react2.default.createElement(
 	              'h3',
 	              { className: 'code-box-title' },
-	              'Request',
-	              this.state.showResponse === 'response' ? ' / Response' : null
+	              this.state.codeBoxTitle
 	            ),
 	            _react2.default.createElement(
 	              'div',
@@ -20733,31 +20738,33 @@
 	                'state=poifhjoeif2'
 	              ),
 	              _react2.default.createElement('hr', null),
-	              this.state.stepState === 'wait' ? _react2.default.createElement(
+	              this.state.responseCode ? _react2.default.createElement(
 	                'div',
-	                { className: 'theme-dark' },
+	                { className: 'code-block' },
+	                this.state.responseCode
+	              ) : null,
+	              this.state.showSpinner ? _react2.default.createElement(
+	                'div',
+	                { className: 'theme-dark step-spinner-container' },
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'spinner spinner-md step-spinner' },
 	                  _react2.default.createElement('div', { className: 'circle' })
 	                )
-	              ) : null,
-	              this.state.stepState === 'response' ? _react2.default.createElement(
-	                'div',
-	                { className: 'code-block' },
-	                'https://openidconnect.net/callback?code=#4/SXjuF3gzD04Oouq'
-	              ) : null,
-	              this.state.stepState !== 'wait' ? _react2.default.createElement(
+	              ) : _react2.default.createElement(
 	                'button',
 	                { onClick: this.start, className: 'code-box-btn' },
 	                'Start'
-	              ) : null
+	              )
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.props.skipTutorial, className: 'skip-tutorial btn-link' },
+	          {
+	            onClick: this.props.skipTutorial,
+	            className: 'skip-tutorial btn-link'
+	          },
 	          'Skip this tutorial. Show me the complete flow.'
 	        )
 	      );
@@ -20766,6 +20773,13 @@
 
 	  return StepOne;
 	}(_react2.default.Component);
+
+	StepOne.propTypes = {
+	  nextStep: _react2.default.PropTypes.func,
+	  skipTutorial: _react2.default.PropTypes.func,
+	  isActive: _react2.default.PropTypes.bool,
+	  openModal: _react2.default.PropTypes.func
+	};
 
 	exports.default = StepOne;
 
@@ -20799,10 +20813,34 @@
 	  function StepTwo() {
 	    _classCallCheck(this, StepTwo);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(StepTwo).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StepTwo).call(this));
+
+	    _this.exchange = _this.exchange.bind(_this);
+	    _this.state = {
+	      codeBoxTitle: 'Request',
+	      showSpinner: false,
+	      responseCode: ''
+	    };
+	    return _this;
 	  }
 
 	  _createClass(StepTwo, [{
+	    key: 'exchange',
+	    value: function exchange() {
+	      var _this2 = this;
+
+	      this.setState({ showSpinner: true });
+
+	      setTimeout(function () {
+	        _this2.setState({
+	          codeBoxTitle: 'Request / Response',
+	          showSpinner: false,
+	          responseCode: 'HTTP/1.1 200 OK\n          Content-Type: application/json\n          {\n          \t“access_token”: “SIAV32hkKG”,\n          \t“token_type”: “Bearer”,\n          \t“expires_in”: 3600,\n          \t“id_token”:”dfhjvhxvifdjgeiojfvifdvjcivjcxivjcivjcxvicb'
+	        });
+	        _this2.props.nextStep();
+	      }, 500);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -20842,7 +20880,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'code-box-title' },
-	              'Request'
+	              this.state.codeBoxTitle
 	            ),
 	            _react2.default.createElement(
 	              'div',
@@ -20853,9 +20891,22 @@
 	                'POST https://sample-oidc.auth0.com/oauth/token HTTP/1.1 grant_type=authorization_code& client_id=7eruHypvzyvEjF5dNt2TN4tzKBE98PTc& client_secret=1fGXdsJnPfhodhwWCNQ_W7HpwrGGz redirect_url=https://openidconnect.net/callback& code=XXXXX'
 	              ),
 	              _react2.default.createElement('hr', null),
-	              _react2.default.createElement(
+	              this.state.responseCode ? _react2.default.createElement(
+	                'div',
+	                { className: 'code-block' },
+	                this.state.responseCode
+	              ) : null,
+	              this.state.showSpinner ? _react2.default.createElement(
+	                'div',
+	                { className: 'theme-dark step-spinner-container' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'spinner spinner-md step-spinner' },
+	                  _react2.default.createElement('div', { className: 'circle' })
+	                )
+	              ) : _react2.default.createElement(
 	                'button',
-	                { className: 'code-box-btn' },
+	                { onClick: this.exchange, className: 'code-box-btn' },
 	                'Exchange'
 	              )
 	            )
@@ -20867,6 +20918,12 @@
 
 	  return StepTwo;
 	}(_react2.default.Component);
+
+	StepTwo.propTypes = {
+	  nextStep: _react2.default.PropTypes.func,
+	  isActive: _react2.default.PropTypes.bool,
+	  openModal: _react2.default.PropTypes.func
+	};
 
 	exports.default = StepTwo;
 
@@ -20920,7 +20977,7 @@
 	          _react2.default.createElement(
 	            "h2",
 	            { className: "step-title" },
-	            "Exchange Code from Token"
+	            "Validate the ID Token for User Profile"
 	          ),
 	          _react2.default.createElement(
 	            "div",
@@ -20944,7 +21001,7 @@
 	          _react2.default.createElement(
 	            "p",
 	            null,
-	            "Now, we need to turn that access code into an access token, by having our server make a request to your token endpoint"
+	            "This token is cryptographically signed with HS256 Algorithm. We’ll use the client secret to validate it."
 	          ),
 	          _react2.default.createElement(
 	            "p",
@@ -21068,15 +21125,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _serverUrls = __webpack_require__(178);
+	var _serverUrls = __webpack_require__(174);
 
 	var _serverUrls2 = _interopRequireDefault(_serverUrls);
 
-	var _clearAllButton = __webpack_require__(182);
+	var _clearAllButton = __webpack_require__(178);
 
 	var _clearAllButton2 = _interopRequireDefault(_clearAllButton);
 
-	var _tokenPanel = __webpack_require__(183);
+	var _tokenPanel = __webpack_require__(179);
 
 	var _tokenPanel2 = _interopRequireDefault(_tokenPanel);
 
@@ -21151,354 +21208,6 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(175);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(177)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(176)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".main-header {\n  background-color: #f9f9f9;\n}\n.main-header .main-navigation {\n  border-bottom: 1px solid rgba(0,0,0,0.05);\n}\n.main-header .main-navigation > .container {\n  position: relative;\n  height: 115px;\n}\n.main-header .openid-logo {\n  display: inline-block;\n  position: absolute;\n  left: 15px;\n  top: 50%;\n  transform: translateY(-50%);\n  width: 135px;\n  height: 42px;\n  background-image: url(\"/images/openid-logo.svg\");\n}\n.main-header .openid-logo > .logo-text {\n  color: rgba(0,0,0,0);\n  font-size: 0;\n}\n.main-header .navigation {\n  display: inline-block;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.main-header .navigation .navigation-item {\n  display: inline-block;\n  font-size: 14px;\n  margin-right: 20px;\n}\n.main-header .navigation .navigation-item > a {\n  color: #000;\n  padding: 10px;\n}\n.main-header .navigation .navigation-item:last-child {\n  margin-right: 0;\n}\n.main-header .social-icons {\n  position: absolute;\n  right: 15px;\n  top: 50%;\n  transform: translateY(-50%);\n  line-height: 0;\n}\n.main-header .social-icons .auth0-icon {\n  display: inline-block;\n  width: 23px;\n  height: 26px;\n  background-image: url(\"/images/auth0-badge.svg\");\n}\n.main-header .social-icons .twitter-icon {\n  display: inline-block;\n  width: 26px;\n  height: 26px;\n  background-image: url(\"/images/twitter-badge.svg\");\n  margin-left: 10px;\n}\n.main-header .hero {\n  text-align: center;\n  padding: 55px 0;\n}\n.main-header .hero .hero-title {\n  margin: 0;\n  margin-bottom: 25px;\n  font-size: 32px;\n  color: #f8931d;\n}\n.main-header .hero .hero-subtitle {\n  max-width: 700px;\n  margin: 0 auto;\n  font-size: 16px;\n  line-height: 2;\n  color: rgba(0,0,0,0.54);\n}\n.playground .playground-header {\n  position: relative;\n  margin-top: 20px;\n  padding: 25px 0;\n  border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n@media (min-width: 768px) {\n  .playground .playground-header {\n    text-align: center;\n  }\n}\n.playground .playground-header-title {\n  display: inline-block;\n  font-size: 26px;\n  line-height: 39px;\n  margin: 0;\n}\n.playground .playground-header-config {\n  font-size: 12px;\n  text-transform: uppercase;\n  line-height: 39px;\n  vertical-align: middle;\n  position: absolute;\n  right: -16px;\n  top: 50%;\n  transform: translateY(-50%);\n  background-color: transparent;\n  border: none;\n}\n.playground .playground-header-config > i {\n  margin-right: 5px;\n  font-size: 16px;\n  line-height: 39px;\n  vertical-align: middle;\n}\n.playground .playground-content {\n  width: 600px;\n  max-width: 100%;\n  margin: 40px auto 0 auto;\n}\n.playground .playground-step {\n  position: relative;\n  padding-bottom: 55px;\n}\n@media (min-width: 768px) {\n  .playground .playground-step {\n    left: -32.5px;\n  }\n}\n.playground .playground-step.active .step-number {\n  color: #fff;\n  background-color: #f8931d;\n}\n.playground .playground-step.last-step .step-number {\n  color: #fff;\n  background-color: #7ed321;\n  border-color: #7ed321;\n}\n.playground .playground-step.last-step:before {\n  display: none !important;\n}\n.playground .playground-step:before {\n  content: '';\n  display: inline-block;\n  height: 100%;\n  width: 1px;\n  background-color: #f8931d;\n  position: absolute;\n  left: 20px;\n  top: 0;\n  transition: all 2s;\n}\n@media (max-width: 767px) {\n  .playground .playground-step:before {\n    display: none;\n  }\n}\n.playground .playground-step.active:before {\n  height: 0%;\n}\n.playground .playground-step .step-number {\n  display: inline-block;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  border: 2px solid #f8931d;\n  background-color: #fff;\n  text-align: center;\n  line-height: 40px;\n  font-size: 18px;\n  color: #f8931d;\n  transition: all 1s;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-number {\n    margin-bottom: 15px;\n    margin-right: 15px;\n  }\n}\n@media (min-width: 768px) {\n  .playground .playground-step .step-number {\n    position: absolute;\n    top: 0;\n    left: 0;\n  }\n}\n.playground .playground-step p {\n  margin-bottom: 20px;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-content {\n    display: inline;\n  }\n}\n@media (min-width: 768px) {\n  .playground .playground-step .step-content {\n    padding-left: 65px;\n  }\n}\n.playground .playground-step .step-title {\n  font-size: 24px;\n  line-height: 40px;\n  margin: 0;\n  margin-bottom: 20px;\n  text-align: left;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-title {\n    display: inline-block;\n  }\n}\n.playground .playground-step .step-spinner {\n  margin: 24px auto 10px auto;\n}\n.playground .playground-step .snippet-description {\n  font-family: 'Inconsolata', monospace;\n  margin-bottom: 5px;\n  color: #f8931d;\n}\n.playground .playground-step .code-snippet {\n  display: block;\n  width: 100%;\n  border-radius: 3px;\n  color: #fff;\n  background-color: #222228;\n  padding: 10px 20px;\n  margin-bottom: 14px;\n  overflow-x: scroll;\n}\n.playground .playground-step .skip-tutorial {\n  display: block;\n  margin: 0 auto;\n  position: relative;\n  left: 32.5px;\n  font-size: 12px;\n  text-transform: uppercase;\n  letter-spacing: 1px;\n  margin: 40px auto 20px auto;\n}\n.playground .playground-step .btn-view-jwt {\n  float: right;\n  position: relative;\n  border: none;\n  bottom: 6px;\n  margin-bottom: 8px;\n  border-radius: 50px;\n  padding: 8px 10px;\n  padding-left: 38px;\n  font-size: 12px;\n  font-weight: bold;\n  text-transform: uppercase;\n  background-color: #000;\n  color: #fff;\n  background-image: url(\"/images/jwt-badge.svg\");\n  background-position: 10px center;\n  background-repeat: no-repeat;\n  background-size: 19px 19px;\n}\n.playground .playground-step .code-box-title {\n  border: 1px solid #222228;\n  border-bottom: 0;\n  font-size: 18px;\n  padding-left: 20px;\n  line-height: 65px;\n  border-radius: 3px 3px 0 0;\n  margin: 0;\n}\n.playground .playground-step .code-box-content {\n  background-color: #222228;\n  color: #fff;\n  border-top: none;\n  border-radius: 0 0 3px 3px;\n  padding: 25px 20px;\n  overflow: scroll;\n}\n.playground .playground-step .code-block {\n  font-family: 'Inconsolata', monospace;\n  font-size: 14px;\n  padding-right: 20px;\n  margin-bottom: 15px;\n}\n.playground .playground-step hr {\n  border-top: 1px solid rgba(255,255,255,0.1);\n  margin: 20px 0;\n}\n.playground .playground-step .code-box-btn {\n  display: block;\n  margin: 0 auto;\n  font-size: 12px;\n  text-transform: uppercase;\n  padding: 15px 20px;\n  border-radius: 3px;\n  color: #222228;\n  border: 0;\n  background-color: #fff;\n  letter-spacing: 1px;\n}\n.main-footer {\n  text-align: center;\n  background-color: #f9f9f9;\n  font-size: 15px;\n  color: rgba(0,0,0,0.54);\n  padding: 30px 0;\n}\n.main-footer .auth0-badge {\n  display: inline-block;\n  background-size: contain;\n  background-repeat: no-repeat;\n  width: 22px;\n  height: 25px;\n  background-image: url(\"/images/auth0-badge.svg\");\n  vertical-align: middle;\n  margin-left: 5px;\n  margin-right: 10px;\n}\n.configuration-modal {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  pointer-events: auto;\n}\n.configuration-modal .configuration-modal-dialog {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 25px;\n  padding-top: 50px;\n  background-color: #fff;\n  width: 100%;\n  max-width: 1000px;\n  border-radius: 3px;\n}\n.configuration-modal .configuration-modal-close {\n  position: absolute;\n  cursor: pointer;\n  top: 30px;\n  right: 30px;\n  font-size: 24px;\n  line-height: 1;\n}\n.configuration-modal .configuration-modal-close:hover,\n.configuration-modal .configuration-modal-close:focus {\n  color: rgba(0,0,0,0.5);\n}\n.configuration-modal .configuration-modal-title {\n  font-size: 26px;\n  text-align: center;\n  margin: 0 0 30px 0;\n}\n.configuration-modal .clear-storage-container {\n  background-color: #222228;\n  border-radius: 3px;\n  color: #fff;\n  font-size: 13px;\n  position: relative;\n}\n.configuration-modal .clear-storage-container > p {\n  padding: 20px;\n  padding-right: 240px;\n  font-size: 13px;\n}\n.configuration-modal .clear-storage-container > .clear-storage-btn {\n  position: absolute;\n  right: 20px;\n  top: 50%;\n  transform: translateY(-50%);\n  background-color: #fff;\n  border: none;\n  border-radius: 3px;\n  letter-spacing: 1px;\n  color: #222228;\n  text-transform: uppercase;\n  font-size: 12px;\n  padding: 10px 20px;\n}\n.configuration-modal .configuration-modal-backdrop {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: rgba(34,34,40,0.75);\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 176 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -21511,7 +21220,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _simpleAjax = __webpack_require__(179);
+	var _simpleAjax = __webpack_require__(175);
 
 	var _simpleAjax2 = _interopRequireDefault(_simpleAjax);
 
@@ -21761,11 +21470,11 @@
 	exports.default = ServerURLs;
 
 /***/ },
-/* 179 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(180).EventEmitter,
-	    queryString = __webpack_require__(181);
+	var EventEmitter = __webpack_require__(176).EventEmitter,
+	    queryString = __webpack_require__(177);
 
 	function tryParseJson(data){
 	    try{
@@ -21908,7 +21617,7 @@
 
 
 /***/ },
-/* 180 */
+/* 176 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -22216,7 +21925,7 @@
 
 
 /***/ },
-/* 181 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22288,7 +21997,7 @@
 
 
 /***/ },
-/* 182 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22346,7 +22055,7 @@
 	exports.default = ClearAllButton;
 
 /***/ },
-/* 183 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22369,7 +22078,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Ajax = __webpack_require__(179);
+	var Ajax = __webpack_require__(175);
 
 	var TokenPanel = function (_React$Component) {
 	  _inherits(TokenPanel, _React$Component);
@@ -22461,6 +22170,354 @@
 	};
 
 	exports.default = TokenPanel;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(181);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(183)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(182)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".main-header {\n  background-color: #f9f9f9;\n}\n.main-header .main-navigation {\n  border-bottom: 1px solid rgba(0,0,0,0.05);\n}\n.main-header .main-navigation > .container {\n  position: relative;\n  height: 115px;\n}\n.main-header .openid-logo {\n  display: inline-block;\n  position: absolute;\n  left: 15px;\n  top: 50%;\n  transform: translateY(-50%);\n  width: 135px;\n  height: 42px;\n  background-image: url(\"/images/openid-logo.svg\");\n}\n.main-header .openid-logo > .logo-text {\n  color: rgba(0,0,0,0);\n  font-size: 0;\n}\n.main-header .navigation {\n  display: inline-block;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.main-header .navigation .navigation-item {\n  display: inline-block;\n  font-size: 14px;\n  margin-right: 20px;\n}\n.main-header .navigation .navigation-item > a {\n  color: #000;\n  padding: 10px;\n}\n.main-header .navigation .navigation-item:last-child {\n  margin-right: 0;\n}\n.main-header .social-icons {\n  position: absolute;\n  right: 15px;\n  top: 50%;\n  transform: translateY(-50%);\n  line-height: 0;\n}\n.main-header .social-icons .auth0-icon {\n  display: inline-block;\n  width: 23px;\n  height: 26px;\n  background-image: url(\"/images/auth0-badge.svg\");\n}\n.main-header .social-icons .twitter-icon {\n  display: inline-block;\n  width: 26px;\n  height: 26px;\n  background-image: url(\"/images/twitter-badge.svg\");\n  margin-left: 10px;\n}\n.main-header .hero {\n  text-align: center;\n  padding: 55px 0;\n}\n.main-header .hero .hero-title {\n  margin: 0;\n  margin-bottom: 25px;\n  font-size: 32px;\n  color: #f8931d;\n}\n.main-header .hero .hero-subtitle {\n  max-width: 700px;\n  margin: 0 auto;\n  font-size: 16px;\n  line-height: 2;\n  color: rgba(0,0,0,0.54);\n}\n.playground .playground-header {\n  position: relative;\n  margin-top: 20px;\n  padding: 25px 0;\n  border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n@media (min-width: 768px) {\n  .playground .playground-header {\n    text-align: center;\n  }\n}\n.playground .playground-header-title {\n  display: inline-block;\n  font-size: 26px;\n  line-height: 39px;\n  margin: 0;\n}\n.playground .playground-header-config {\n  font-size: 12px;\n  text-transform: uppercase;\n  line-height: 39px;\n  vertical-align: middle;\n  position: absolute;\n  right: -16px;\n  top: 50%;\n  transform: translateY(-50%);\n  background-color: transparent;\n  border: none;\n}\n.playground .playground-header-config > i {\n  margin-right: 5px;\n  font-size: 16px;\n  line-height: 39px;\n  vertical-align: middle;\n}\n.playground .playground-content {\n  width: 600px;\n  max-width: 100%;\n  margin: 40px auto 0 auto;\n}\n.playground .playground-step {\n  position: relative;\n  padding-bottom: 55px;\n}\n@media (min-width: 768px) {\n  .playground .playground-step {\n    left: -32.5px;\n  }\n}\n.playground .playground-step.active .step-number {\n  color: #fff;\n  background-color: #f8931d;\n}\n.playground .playground-step.last-step .step-number {\n  color: #fff;\n  background-color: #7ed321;\n  border-color: #7ed321;\n}\n.playground .playground-step.last-step:before {\n  display: none !important;\n}\n.playground .playground-step:before {\n  content: '';\n  display: inline-block;\n  height: 100%;\n  width: 1px;\n  background-color: #f8931d;\n  position: absolute;\n  left: 20px;\n  top: 0;\n  transition: all 2s;\n}\n@media (max-width: 767px) {\n  .playground .playground-step:before {\n    display: none;\n  }\n}\n.playground .playground-step.active:before {\n  height: 0%;\n}\n.playground .playground-step .step-number {\n  display: inline-block;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  border: 2px solid #f8931d;\n  background-color: #fff;\n  text-align: center;\n  line-height: 40px;\n  font-size: 18px;\n  color: #f8931d;\n  transition: all 1s;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-number {\n    margin-bottom: 15px;\n    margin-right: 15px;\n  }\n}\n@media (min-width: 768px) {\n  .playground .playground-step .step-number {\n    position: absolute;\n    top: 0;\n    left: 0;\n  }\n}\n.playground .playground-step p {\n  margin-bottom: 20px;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-content {\n    display: inline;\n  }\n}\n@media (min-width: 768px) {\n  .playground .playground-step .step-content {\n    padding-left: 65px;\n  }\n}\n.playground .playground-step .step-title {\n  font-size: 24px;\n  line-height: 40px;\n  margin: 0;\n  margin-bottom: 20px;\n  text-align: left;\n}\n@media (max-width: 767px) {\n  .playground .playground-step .step-title {\n    display: inline-block;\n  }\n}\n.playground .playground-step .step-spinner-container {\n  text-align: center;\n  padding: 7px 0;\n}\n.playground .playground-step .step-spinner-container .step-spinner {\n  display: inline-block;\n  margin: 0;\n  vertical-align: middle;\n}\n.playground .playground-step .snippet-description {\n  font-family: 'Inconsolata', monospace;\n  margin-bottom: 5px;\n  color: #f8931d;\n}\n.playground .playground-step .code-snippet {\n  display: block;\n  width: 100%;\n  border-radius: 3px;\n  color: #fff;\n  background-color: #222228;\n  padding: 10px 20px;\n  margin-bottom: 14px;\n  overflow-x: scroll;\n}\n.playground .playground-step .skip-tutorial {\n  display: block;\n  margin: 0 auto;\n  position: relative;\n  left: 32.5px;\n  font-size: 12px;\n  text-transform: uppercase;\n  letter-spacing: 1px;\n  margin: 40px auto 20px auto;\n}\n.playground .playground-step .btn-view-jwt {\n  float: right;\n  position: relative;\n  border: none;\n  bottom: 6px;\n  margin-bottom: 8px;\n  border-radius: 50px;\n  padding: 8px 10px;\n  padding-left: 38px;\n  font-size: 12px;\n  font-weight: bold;\n  text-transform: uppercase;\n  background-color: #000;\n  color: #fff;\n  background-image: url(\"/images/jwt-badge.svg\");\n  background-position: 10px center;\n  background-repeat: no-repeat;\n  background-size: 19px 19px;\n}\n.playground .playground-step .code-box-title {\n  border: 1px solid #222228;\n  border-bottom: 0;\n  font-size: 18px;\n  padding-left: 20px;\n  line-height: 65px;\n  border-radius: 3px 3px 0 0;\n  margin: 0;\n}\n.playground .playground-step .code-box-content {\n  background-color: #222228;\n  color: #fff;\n  border-top: none;\n  border-radius: 0 0 3px 3px;\n  padding: 25px 20px;\n  overflow: scroll;\n}\n.playground .playground-step .code-block {\n  font-family: 'Inconsolata', monospace;\n  font-size: 14px;\n  padding-right: 20px;\n  margin-bottom: 15px;\n}\n.playground .playground-step hr {\n  border-top: 1px solid rgba(255,255,255,0.1);\n  margin: 20px 0;\n}\n.playground .playground-step .code-box-btn {\n  display: block;\n  margin: 0 auto;\n  font-size: 12px;\n  text-transform: uppercase;\n  padding: 15px 20px;\n  border-radius: 3px;\n  color: #222228;\n  border: 0;\n  background-color: #fff;\n  letter-spacing: 1px;\n}\n.main-footer {\n  text-align: center;\n  background-color: #f9f9f9;\n  font-size: 15px;\n  color: rgba(0,0,0,0.54);\n  padding: 30px 0;\n}\n.main-footer .auth0-badge {\n  display: inline-block;\n  background-size: contain;\n  background-repeat: no-repeat;\n  width: 22px;\n  height: 25px;\n  background-image: url(\"/images/auth0-badge.svg\");\n  vertical-align: middle;\n  margin-left: 5px;\n  margin-right: 10px;\n}\n.configuration-modal {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  pointer-events: auto;\n}\n.configuration-modal .configuration-modal-dialog {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 25px;\n  padding-top: 50px;\n  background-color: #fff;\n  width: 100%;\n  max-width: 1000px;\n  border-radius: 3px;\n}\n.configuration-modal .configuration-modal-close {\n  position: absolute;\n  cursor: pointer;\n  top: 30px;\n  right: 30px;\n  font-size: 24px;\n  line-height: 1;\n}\n.configuration-modal .configuration-modal-close:hover,\n.configuration-modal .configuration-modal-close:focus {\n  color: rgba(0,0,0,0.5);\n}\n.configuration-modal .configuration-modal-title {\n  font-size: 26px;\n  text-align: center;\n  margin: 0 0 30px 0;\n}\n.configuration-modal .clear-storage-container {\n  background-color: #222228;\n  border-radius: 3px;\n  color: #fff;\n  font-size: 13px;\n  position: relative;\n}\n.configuration-modal .clear-storage-container > p {\n  padding: 20px;\n  padding-right: 240px;\n  font-size: 13px;\n}\n.configuration-modal .clear-storage-container > .clear-storage-btn {\n  position: absolute;\n  right: 20px;\n  top: 50%;\n  transform: translateY(-50%);\n  background-color: #fff;\n  border: none;\n  border-radius: 3px;\n  letter-spacing: 1px;\n  color: #222228;\n  text-transform: uppercase;\n  font-size: 12px;\n  padding: 10px 20px;\n}\n.configuration-modal .configuration-modal-backdrop {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: rgba(34,34,40,0.75);\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ }
 /******/ ]);

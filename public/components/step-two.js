@@ -1,9 +1,40 @@
 import React from 'react';
 
 class StepTwo extends React.Component {
+
+  constructor() {
+    super();
+    this.exchange = this.exchange.bind(this);
+    this.state = {
+      codeBoxTitle: 'Request',
+      showSpinner: false,
+      responseCode: ''
+    };
+  }
+
+  exchange() {
+    this.setState({ showSpinner: true });
+
+    setTimeout(() => {
+      this.setState({
+        codeBoxTitle: 'Request / Response',
+        showSpinner: false,
+        responseCode:
+          `HTTP/1.1 200 OK
+          Content-Type: application/json
+          {
+          	“access_token”: “SIAV32hkKG”,
+          	“token_type”: “Bearer”,
+          	“expires_in”: 3600,
+          	“id_token”:”dfhjvhxvifdjgeiojfvifdvjcivjcxivjcivjcxvicb`
+      });
+      this.props.nextStep();
+    }, 500);
+  }
+
   render() {
     return (
-      <div className={`playground-step ${this.props.isActive ? 'active' : '' }`} >
+      <div className={`playground-step ${this.props.isActive ? 'active' : ''}`} >
         <span className="step-number">2</span>
         <div className="step-content">
           <h2 className="step-title">Exchange Code from Token</h2>
@@ -14,9 +45,7 @@ class StepTwo extends React.Component {
             by having our server make a request to your token endpoint
           </p>
           <div className="code-box">
-            <div className="code-box-title">
-              Request
-            </div>
+            <div className="code-box-title">{this.state.codeBoxTitle}</div>
             <div className="code-box-content">
               <div className="code-block">
                 POST https://sample-oidc.auth0.com/oauth/token HTTP/1.1
@@ -27,7 +56,18 @@ class StepTwo extends React.Component {
                 code=XXXXX
               </div>
               <hr />
-              <button className="code-box-btn">Exchange</button>
+              { this.state.responseCode ?
+                <div className="code-block">{this.state.responseCode}</div> : null
+              }
+              { this.state.showSpinner ?
+                <div className="theme-dark step-spinner-container">
+                  <div className="spinner spinner-md step-spinner">
+                    <div className="circle"></div>
+                  </div>
+                </div>
+                :
+                <button onClick={this.exchange} className="code-box-btn">Exchange</button>
+              }
             </div>
           </div>
         </div>
@@ -35,5 +75,11 @@ class StepTwo extends React.Component {
     );
   }
 }
+
+StepTwo.propTypes = {
+  nextStep: React.PropTypes.func,
+  isActive: React.PropTypes.bool,
+  openModal: React.PropTypes.func
+};
 
 export default StepTwo;

@@ -6,7 +6,7 @@ class StepThree extends React.Component {
       <div className="playground-step">
         <span className="step-number">3</span>
         <div className="step-content">
-          <h2 className="step-title">Exchange Code from Token</h2>
+          <h2 className="step-title">Validate the ID Token for User Profile</h2>
           <div>
             <div className="snippet-description pull-left">Your “id_token” is</div>
             <button className="btn-view-jwt">View on JWT.io</button>
@@ -15,8 +15,8 @@ class StepThree extends React.Component {
             “hjvcbhvbjvchbjcvhbjcvhbjvchbjcvhbjcvbhcjvxcvcvcvcvcvcvcvcvcc
           </div>
           <p>
-            Now, we need to turn that access code into an access token,
-            by having our server make a request to your token endpoint
+            This token is cryptographically signed with HS256 Algorithm.
+            We’ll use the client secret to validate it.
           </p>
           <p>Your “access_token” is</p>
           <div className="code-snippet">“SIAV32hkKG”</div>
