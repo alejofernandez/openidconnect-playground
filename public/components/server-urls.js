@@ -37,6 +37,7 @@ class ServerURLs extends React.Component {
               <select
                 name="server"
                 ref="server"
+                className="form-control"
                 onChange={ (event) => { this.update(event); this.updateDiscovery(); }}
               >
                 <option value="none">SELECT A SERVER TEMPLATE</option>
@@ -52,8 +53,8 @@ class ServerURLs extends React.Component {
             <div className="form-group">
               <label htmlFor="domain" className="col-xs-3 control-label">Auth0 domain</label>
               <div className="col-xs-9">
-                <input name="domain" onChange={this.update} ref="domain" value={this.props.domain} placeholder="mydomain.auth0.com" />
-                <button onClick={this.updateDiscovery}>Use Auth0 Discovery Document</button>
+                <input name="domain" onChange={this.update} ref="domain" className="form-control" value={this.props.domain} placeholder="mydomain.auth0.com" />
+                <button className="btn btn-transparent btn-md" onClick={this.updateDiscovery}>Use Auth0 Discovery Document</button>
               </div>
             </div>
             <div className="form-group">
@@ -62,13 +63,13 @@ class ServerURLs extends React.Component {
             <div className="form-group">
               <span className="col-xs-3 control-label">Authorization Endpoint:&nbsp;</span>
               <div className="col-xs-9">
-                <span ref="authEndpoint">{this.props.authEndpoint}</span>
+                <input className="form-control" readOnly name="authEndpoint" ref="authEndpoint" value={this.props.authEndpoint}/>
               </div>
             </div>
             <div className="form-group">
               <span className="col-xs-3 control-label">Token Endpoint:</span>
               <div className="col-xs-9">
-                <span ref="tokenEndpoint">{this.props.tokenEndpoint}</span>
+                <input className="form-control" readOnly name="tokenEndpoint" ref="tokenEndpoint" value={this.props.tokenEndpoint} />
               </div>
             </div>
           </div>
@@ -84,7 +85,7 @@ class ServerURLs extends React.Component {
                 Discovery Document URL:&nbsp;
               </label>
               <div className="col-xs-9">
-                <input name="discoveryURL" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.discoveryURL} ref="discoveryURL" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
+                <input className="form-control" name="discoveryURL" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.discoveryURL} ref="discoveryURL" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
                 <button
                   style={{display:(this.props.server != 'google' ? 'inline-block' : 'none')}}
                   onClick={this.updateDiscovery}
@@ -102,7 +103,7 @@ class ServerURLs extends React.Component {
                   Authorization Endpoint:&nbsp;
                 </label>
                 <div className="col-xs-9">
-                  <input name="authEndpoint" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.authEndpoint} ref="authEndpoint" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
+                  <input className="form-control" name="authEndpoint" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.authEndpoint} ref="authEndpoint" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
                 </div>
             </div>
 
@@ -114,7 +115,7 @@ class ServerURLs extends React.Component {
                 Token Endpoint
               </label>
 							<div className="col-xs-9">
-								<input name="tokenEndpoint" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.tokenEndpoint} ref="tokenEndpoint" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
+								<input className="form-control" name="tokenEndpoint" onChange={this.update} disabled={this.props.server == 'google' ? 'disabled' : ''} value={this.props.tokenEndpoint} ref="tokenEndpoint" placeholder="https://my-oidc.com/.well-known/oidc-configuration" />
 							</div>
             </div>
 

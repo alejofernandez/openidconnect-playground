@@ -22078,6 +22078,7 @@
 	              {
 	                name: 'server',
 	                ref: 'server',
+	                className: 'form-control',
 	                onChange: function onChange(event) {
 	                  _this2.update(event);_this2.updateDiscovery();
 	                }
@@ -22119,10 +22120,10 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement('input', { name: 'domain', onChange: this.update, ref: 'domain', value: this.props.domain, placeholder: 'mydomain.auth0.com' }),
+	              _react2.default.createElement('input', { name: 'domain', onChange: this.update, ref: 'domain', className: 'form-control', value: this.props.domain, placeholder: 'mydomain.auth0.com' }),
 	              _react2.default.createElement(
 	                'button',
-	                { onClick: this.updateDiscovery },
+	                { className: 'btn btn-transparent btn-md', onClick: this.updateDiscovery },
 	                'Use Auth0 Discovery Document'
 	              )
 	            )
@@ -22143,11 +22144,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement(
-	                'span',
-	                { ref: 'authEndpoint' },
-	                this.props.authEndpoint
-	              )
+	              _react2.default.createElement('input', { className: 'form-control', readOnly: true, name: 'authEndpoint', ref: 'authEndpoint', value: this.props.authEndpoint })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -22161,11 +22158,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement(
-	                'span',
-	                { ref: 'tokenEndpoint' },
-	                this.props.tokenEndpoint
-	              )
+	              _react2.default.createElement('input', { className: 'form-control', readOnly: true, name: 'tokenEndpoint', ref: 'tokenEndpoint', value: this.props.tokenEndpoint })
 	            )
 	          )
 	        ) : null,
@@ -22186,7 +22179,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement('input', { name: 'discoveryURL', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.discoveryURL, ref: 'discoveryURL', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' }),
+	              _react2.default.createElement('input', { className: 'form-control', name: 'discoveryURL', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.discoveryURL, ref: 'discoveryURL', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' }),
 	              _react2.default.createElement(
 	                'button',
 	                {
@@ -22211,7 +22204,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement('input', { name: 'authEndpoint', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.authEndpoint, ref: 'authEndpoint', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' })
+	              _react2.default.createElement('input', { className: 'form-control', name: 'authEndpoint', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.authEndpoint, ref: 'authEndpoint', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -22228,7 +22221,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-xs-9' },
-	              _react2.default.createElement('input', { name: 'tokenEndpoint', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.tokenEndpoint, ref: 'tokenEndpoint', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' })
+	              _react2.default.createElement('input', { className: 'form-control', name: 'tokenEndpoint', onChange: this.update, disabled: this.props.server == 'google' ? 'disabled' : '', value: this.props.tokenEndpoint, ref: 'tokenEndpoint', placeholder: 'https://my-oidc.com/.well-known/oidc-configuration' })
 	            )
 	          )
 	        ) : null,
@@ -38802,7 +38795,8 @@
 	              name: 'clientID',
 	              onChange: this.update,
 	              value: this.props.clientID,
-	              ref: 'clientID'
+	              ref: 'clientID',
+	              className: 'form-control'
 	            })
 	          )
 	        ),
@@ -38824,7 +38818,8 @@
 	              name: 'clientSecret',
 	              onChange: this.update,
 	              value: this.props.clientSecret,
-	              ref: 'clientSecret'
+	              ref: 'clientSecret',
+	              className: 'form-control'
 	            })
 	          )
 	        ),
@@ -38839,7 +38834,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-xs-9' },
-	            _react2.default.createElement('input', { name: 'scopes', onChange: this.update, value: this.props.scopes, ref: 'scopes' })
+	            _react2.default.createElement('input', { className: 'form-control', name: 'scopes', onChange: this.update, value: this.props.scopes, ref: 'scopes' })
 	          )
 	        )
 	      );
