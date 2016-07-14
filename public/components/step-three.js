@@ -1,6 +1,37 @@
 import React from 'react';
 
 class StepThree extends React.Component {
+
+  constructor() {
+    super();
+    this.exchange = this.exchange.bind(this);
+    this.state = {
+      codeBoxTitle: 'Request',
+      showSpinner: false,
+      responseCode: ''
+    };
+  }
+
+  exchange() {
+    this.setState({ showSpinner: true });
+
+    setTimeout(() => {
+      this.setState({
+        codeBoxTitle: 'Request / Response',
+        showSpinner: false,
+        responseCode:
+          `HTTP/1.1 200 OK
+          Content-Type: application/json
+          {
+          	“access_token”: “SIAV32hkKG”,
+          	“token_type”: “Bearer”,
+          	“expires_in”: 3600,
+          	“id_token”:”dfhjvhxvifdjgeiojfvifdvjcivjcxivjcivjcxvicb`
+      });
+      this.props.nextStep();
+    }, 500);
+  }
+
   render() {
     return (
       <div className="playground-step">
@@ -36,5 +67,11 @@ class StepThree extends React.Component {
     );
   }
 }
+
+StepThree.propTypes = {
+  nextStep: React.PropTypes.func,
+  isActive: React.PropTypes.bool,
+  openModal: React.PropTypes.func
+};
 
 export default StepThree;

@@ -115,6 +115,7 @@ class OpenIDPage extends React.Component {
               }
               { this.state.currentStep >= 3 ?
                 <StepThree
+                  nextStep={ () => { this.setStep(4); } }
                   isActive={ this.state.currentStep === 3 }
                 />
                 : null
