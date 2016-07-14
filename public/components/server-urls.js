@@ -47,15 +47,33 @@ class ServerURLs extends React.Component {
           </div>
         </div>
 
-        <p style={{display:(this.props.server == 'Auth0' ? 'block' : 'none')}}>
-          <label for="domain">Auth0 domain:&nbsp;</label>
-          <input name="domain" onChange={this.update} ref="domain" value={this.props.domain} placeholder="mydomain.auth0.com" />
-          <button onClick={this.updateDiscovery}>Use Auth0 Discovery Document</button>
-          <br />
-          <span ref="Auth0DiscoveryDocumentURL"></span>
-          <span>Authorization Endpoint:&nbsp; <span ref="authEndpoint">{this.props.authEndpoint}</span></span><br/>
-          <span>Token Endpoint:&nbsp; <span ref="tokenEndpoint">{this.props.tokenEndpoint}</span></span><br/>
-        </p>
+        { this.props.server === 'Auth0' ?
+          <div>
+            <div className="form-group">
+              <label htmlFor="domain" className="col-xs-3 control-label">Auth0 domain</label>
+              <div className="col-xs-9">
+                <input name="domain" onChange={this.update} ref="domain" value={this.props.domain} placeholder="mydomain.auth0.com" />
+                <button onClick={this.updateDiscovery}>Use Auth0 Discovery Document</button>
+              </div>
+            </div>
+            <div className="form-group">
+              <span ref="Auth0DiscoveryDocumentURL"></span>
+            </div>
+            <div className="form-group">
+              <span className="col-xs-3 control-label">Authorization Endpoint:&nbsp;</span>
+              <div className="col-xs-9">
+                <span ref="authEndpoint">{this.props.authEndpoint}</span>
+              </div>
+            </div>
+            <div className="form-group">
+              <span className="col-xs-3 control-label">Token Endpoint:</span>
+              <div className="col-xs-9">
+                <span ref="tokenEndpoint">{this.props.tokenEndpoint}</span>
+              </div>
+            </div>
+          </div>
+          : null
+        }
         { this.props.server !== 'Auth0' ?
           <div>
             <div className="form-group">

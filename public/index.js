@@ -22105,45 +22105,70 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(
-	          'p',
-	          { style: { display: this.props.server == 'Auth0' ? 'block' : 'none' } },
+	        this.props.server === 'Auth0' ? _react2.default.createElement(
+	          'div',
+	          null,
 	          _react2.default.createElement(
-	            'label',
-	            { 'for': 'domain' },
-	            'Auth0 domain: '
-	          ),
-	          _react2.default.createElement('input', { name: 'domain', onChange: this.update, ref: 'domain', value: this.props.domain, placeholder: 'mydomain.auth0.com' }),
-	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.updateDiscovery },
-	            'Use Auth0 Discovery Document'
-	          ),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('span', { ref: 'Auth0DiscoveryDocumentURL' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Authorization Endpoint:  ',
+	            'div',
+	            { className: 'form-group' },
 	            _react2.default.createElement(
-	              'span',
-	              { ref: 'authEndpoint' },
-	              this.props.authEndpoint
+	              'label',
+	              { htmlFor: 'domain', className: 'col-xs-3 control-label' },
+	              'Auth0 domain'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-9' },
+	              _react2.default.createElement('input', { name: 'domain', onChange: this.update, ref: 'domain', value: this.props.domain, placeholder: 'mydomain.auth0.com' }),
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.updateDiscovery },
+	                'Use Auth0 Discovery Document'
+	              )
 	            )
 	          ),
-	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Token Endpoint:  ',
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement('span', { ref: 'Auth0DiscoveryDocumentURL' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
 	            _react2.default.createElement(
 	              'span',
-	              { ref: 'tokenEndpoint' },
-	              this.props.tokenEndpoint
+	              { className: 'col-xs-3 control-label' },
+	              'Authorization Endpoint: '
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-9' },
+	              _react2.default.createElement(
+	                'span',
+	                { ref: 'authEndpoint' },
+	                this.props.authEndpoint
+	              )
 	            )
 	          ),
-	          _react2.default.createElement('br', null)
-	        ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'col-xs-3 control-label' },
+	              'Token Endpoint:'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-xs-9' },
+	              _react2.default.createElement(
+	                'span',
+	                { ref: 'tokenEndpoint' },
+	                this.props.tokenEndpoint
+	              )
+	            )
+	          )
+	        ) : null,
 	        this.props.server !== 'Auth0' ? _react2.default.createElement(
 	          'div',
 	          null,
@@ -38713,7 +38738,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -38731,62 +38756,97 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ClientInfo = function (_React$Component) {
-		_inherits(ClientInfo, _React$Component);
+	  _inherits(ClientInfo, _React$Component);
 
-		function ClientInfo() {
-			_classCallCheck(this, ClientInfo);
+	  function ClientInfo() {
+	    _classCallCheck(this, ClientInfo);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ClientInfo).call(this));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ClientInfo).call(this));
 
-			_this.update = _this.update.bind(_this);
-			var savedState = localStorage.getItem('app-state') || '{}';
-			savedState = JSON.parse(savedState);
-			_this.state = savedState;
-			return _this;
-		}
+	    _this.update = _this.update.bind(_this);
+	    var savedState = localStorage.getItem('app-state') || '{}';
+	    savedState = JSON.parse(savedState);
+	    _this.state = savedState;
+	    return _this;
+	  }
 
-		_createClass(ClientInfo, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'label',
-						{ 'for': 'clientID' },
-						'OIDC Client ID:'
-					),
-					_react2.default.createElement('input', { name: 'clientID', onChange: this.update, value: this.props.clientID, ref: 'clientID' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'label',
-						{ 'for': 'clientSecret' },
-						'OIDC Client Secret:'
-					),
-					_react2.default.createElement('input', { name: 'clientSecret', onChange: this.update, value: this.props.clientSecret, ref: 'clientSecret' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'label',
-						{ 'for': 'scopes' },
-						'Scope:'
-					),
-					_react2.default.createElement('input', { name: 'scopes', onChange: this.update, value: this.props.scopes, ref: 'scopes' })
-				);
-			}
-		}, {
-			key: 'update',
-			value: function update() {
-				window.dispatchEvent(new CustomEvent('configChange', {
-					detail: {
-						clientID: this.refs.clientID.value,
-						clientSecret: this.refs.clientSecret.value,
-						scopes: this.refs.scopes.value
-					}
-				}));
-			}
-		}]);
+	  _createClass(ClientInfo, [{
+	    key: 'update',
+	    value: function update() {
+	      window.dispatchEvent(new CustomEvent('configChange', {
+	        detail: {
+	          clientID: this.refs.clientID.value,
+	          clientSecret: this.refs.clientSecret.value,
+	          scopes: this.refs.scopes.value
+	        }
+	      }));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'form-horizontal' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'clientID', className: 'col-xs-3 control-label' },
+	            'OIDC Client ID:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-9' },
+	            _react2.default.createElement('input', {
+	              name: 'clientID',
+	              onChange: this.update,
+	              value: this.props.clientID,
+	              ref: 'clientID'
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            {
+	              htmlFor: 'clientSecret',
+	              className: 'col-xs-3 control-label'
+	            },
+	            'OIDC Client Secret:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-9' },
+	            _react2.default.createElement('input', {
+	              name: 'clientSecret',
+	              onChange: this.update,
+	              value: this.props.clientSecret,
+	              ref: 'clientSecret'
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'scopes', className: 'col-xs-3 control-label' },
+	            'Scope:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-9' },
+	            _react2.default.createElement('input', { name: 'scopes', onChange: this.update, value: this.props.scopes, ref: 'scopes' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-		return ClientInfo;
+	  return ClientInfo;
 	}(_react2.default.Component);
 
 	exports.default = ClientInfo;
