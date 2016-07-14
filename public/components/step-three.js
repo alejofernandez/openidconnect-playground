@@ -1,35 +1,42 @@
 import React from 'react';
+import Ajax from 'simple-ajax';
 
 class StepThree extends React.Component {
 
   constructor() {
     super();
-    this.exchange = this.exchange.bind(this);
-    this.state = {
-      codeBoxTitle: 'Request',
-      showSpinner: false,
-      responseCode: ''
-    };
+    this.verify = this.verify.bind(this);
+    this.state = {};
+    this.state.codeBoxTitle = 'Request';
+    this.state.showSpinner = false;
+    this.state.responseCode = '';
   }
+  verify() {
+    this.setState({ showSpinner: true })
+    let serviceDiscovery = new Ajax({
+      url: '/validate',
+      method: 'POST',
+      data: JSON.stringify({
+        clientSecret: this.props.clientSecret,
+        idToken: this.props.idToken,
+        server: this.props.server
+      })
+    });
 
-  exchange() {
-    this.setState({ showSpinner: true });
+    serviceDiscovery.on('success', function(event){
+      this.setState({ stepState: 'initial'})
+      let result = JSON.parse(event.currentTarget.response)
+      window.dispatchEvent(new CustomEvent('configChange', {
+        detail: {
+          validated: true,
+          decodedId: result
+        }
+      }))
+    }.bind(this))
 
-    setTimeout(() => {
-      this.setState({
-        codeBoxTitle: 'Request / Response',
-        showSpinner: false,
-        responseCode:
-          `HTTP/1.1 200 OK
-          Content-Type: application/json
-          {
-          	“access_token”: “SIAV32hkKG”,
-          	“token_type”: “Bearer”,
-          	“expires_in”: 3600,
-          	“id_token”:”dfhjvhxvifdjgeiojfvifdvjcivjcxivjcivjcxvicb`
-      });
-      this.props.nextStep();
-    }, 500);
+    // TODO: Add error case
+
+    serviceDiscovery.send()
   }
 
   render() {
@@ -38,28 +45,32 @@ class StepThree extends React.Component {
         <span className="step-number">3</span>
         <div className="step-content">
           <h2 className="step-title">Validate the ID Token for User Profile</h2>
+          <p>
+            Now, we need to verify that the ID Token sent was from the correct place by validating the JWT's signature
+          </p>
           <div>
             <div className="snippet-description pull-left">Your “id_token” is</div>
             <button className="btn-view-jwt">View on JWT.io</button>
           </div>
           <div className="code-snippet">
-            “hjvcbhvbjvchbjcvhbjcvhbjvchbjcvhbjcvbhcjvxcvcvcvcvcvcvcvcvcc
+            {this.props.idToken}
           </div>
           <p>
             This token is cryptographically signed with HS256 Algorithm.
             We’ll use the client secret to validate it.
           </p>
           <p>Your “access_token” is</p>
-          <div className="code-snippet">“SIAV32hkKG”</div>
+          <div className="code-snippet">{this.props.accessToken}</div>
           <div className="code-box">
-            <div className="code-box-title">Request</div>
+            <div className="code-box-title">Validate</div>
             <div className="code-box-content">
               <div className="code-block">
-                GET https://sample-oidc.auth0.com/userinfo
-                ? access_token= “SIAV32hkKG”
+                POST {this.props.userInfoEndpoint}
+                <br/>
+                Authorization: Bearer {this.props.accessToken}
               </div>
               <hr />
-              <button className="code-box-btn">Exchange</button>
+              <button onClick={this.verify} className="code-box-btn">Verify</button>
             </div>
           </div>
         </div>
