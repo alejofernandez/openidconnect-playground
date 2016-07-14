@@ -9,23 +9,22 @@ class StepOne extends React.Component {
     savedState = JSON.parse(savedState);
 
     this.state = savedState;
-    this.state.stepState = 'initial';
     this.state.codeBoxTitle = 'Request';
     this.state.showSpinner = false;
     this.state.responseCode = '';
   }
 
   start() {
-    this.setState({ showSpinner: true });
+    // this.setState({ showSpinner: true });
 
-    setTimeout(() => {
-      this.setState({
-        codeBoxTitle: 'Request / Response',
-        showSpinner: false,
-        responseCode: 'https://openidconnect.net/callback?code=#4/SXjuF3gzD04Oouq'
-      });
-      this.props.nextStep();
-    }, 500);
+    // setTimeout(() => {
+    //   this.setState({
+    //     codeBoxTitle: 'Request / Response',
+    //     showSpinner: false,
+    //     responseCode: 'https://openidconnect.net/callback?code=#4/SXjuF3gzD04Oouq'
+    //   });
+    //   this.props.nextStep();
+    // }, 500);
 
     let completeURL = this.props.authEndpoint + '?client_id=' + this.props.clientID + '&redirect_uri=' + this.props.redirectURI +'&scope=' + encodeURI(this.props.scopes) + '&response_type=code&state=' + this.props.stateToken
     window.location = completeURL;
