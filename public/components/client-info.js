@@ -23,8 +23,8 @@ class ClientInfo extends React.Component {
     return (
       <div className="form-horizontal">
         <div className="form-group">
-          <label htmlFor="clientID" className="col-xs-3 control-label">OIDC Client ID:</label>
-          <div className="col-xs-9">
+          <label htmlFor="clientID" className="col-xs-2 control-label">OIDC Client ID:</label>
+          <div className="col-xs-10">
             <input
               name="clientID"
               onChange={this.update}
@@ -38,11 +38,11 @@ class ClientInfo extends React.Component {
         <div className="form-group">
           <label
             htmlFor="clientSecret"
-            className="col-xs-3 control-label"
+            className="col-xs-2 control-label"
           >
             OIDC Client Secret:
           </label>
-          <div className="col-xs-9">
+          <div className="col-xs-10">
             <input
               name="clientSecret"
               onChange={this.update}
@@ -54,8 +54,8 @@ class ClientInfo extends React.Component {
         </div>
 
 				<div className="form-group">
-					<label htmlFor="scopes" className="col-xs-3 control-label">Scope:</label>
-					<div className="col-xs-9">
+					<label htmlFor="scopes" className="col-xs-2 control-label">Scope:</label>
+					<div className="col-xs-10">
 						<input className="form-control" name="scopes" onChange={this.update} value={this.props.scopes} ref="scopes" />
 					</div>
 				</div>
